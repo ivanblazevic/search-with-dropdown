@@ -10,6 +10,46 @@ export default class Search extends Component {
 
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
+
+		this.filters = [
+			{
+				name: "Everything"
+			},
+			{
+				name: "New in your area"
+			},
+			{
+				name: "Fashion and Accessories"
+			},
+			{
+				name: "Home and Garden"
+			},
+			{
+				name: "Electronics"
+			},
+			{
+				name: "Baby and Child"
+			},
+			{
+				name: "Sport, Leisure and Games"
+			},
+			{
+				name: "Movies, Books and Music"
+			},
+			{
+				name: "Cars and Motors"
+			},
+			{
+				name: "Property"
+			},
+			{
+				name: "Services"
+			},
+			{
+				name: "Other"
+			}
+		]
+
 	}
 
 	handleChange(event) {
@@ -35,22 +75,21 @@ export default class Search extends Component {
 				{ this.state.value || !this.state.value  ?
 
 					<div class={style.dropdown}>
-						<label>Filters</label>
+						<label style="font-size: 20px;margin: 6px 0;display: inline-block;">Filters</label>
 
 						<div class={style.sectionContainer}>
-							<div class={style.sectionContainerItem}>a</div>
-							<div class={style.sectionContainerItem}>b</div>
-							<div class={style.sectionContainerItem}>c</div>
-							<div class={style.sectionContainerItem}>d</div>
-							<div class={style.sectionContainerItem}>e</div>
+							{
+								this.filters.map(function(player) {
+   									return (
+										<div class={style.sectionContainerItem}>
+											<div class={style.filterContainer}>
+												<i></i><span>{player.name}</span>
+											</div>
+										</div>
+									)
+								})
+							}
 						</div>
-
-						<div class={style.sectionContainer}>
-							<div class={style.sectionContainerItem}>a</div>
-							<div class={style.sectionContainerItem}>b</div>
-						</div>
-
-						fils
 
 					</div>
 
