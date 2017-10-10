@@ -13,7 +13,6 @@ export default class Search extends Component {
 		this.handleSubmit = this.handleSubmit.bind(this);
 
 		this.filters = [
-			/*
 			{
 				name: "Everything",
 				selected: true
@@ -57,34 +56,53 @@ export default class Search extends Component {
 			{
 				name: "Services",
 				selected: false
-			},*/
+			},
 			{
 				name: "Other",
 				selected: false,
-				onClick: function(e) {
-
-					this.selected = true;
-
-					e.setState({ selected: true })
-
-
-				},
-				getClass: function() {
-
-					if (this.selected) {
-						return style.filterContainer + ' ' + style.active;
-					} else {
-						return style.filterContainer;
-					}
-
-
-				}
 			}
 		]
 
-		this.filters.onClick = function() {
-			console.log('kaj');
+
+		var extend = {
+			isSelected: function() {
+				return !!this.selected;
+			},
+			setSelected: function(isSelected) {
+				this.selected = isSelected;
+			},
+			onClick: function(e) {
+				
+				if (this.name != "Everything") {
+					var everythingFilter = find(e.filters, function(i) { return i.name == "Everything" });
+					everythingFilter.setSelected(false);
+				} else {
+					// deselect all filters if EVERYTHING filter is selected
+					e.filters.forEach(function(f) {
+						f.setSelected(false);
+					})
+				}
+
+				this.isSelected() ? this.setSelected(false) : this.setSelected(true);
+				e.forceUpdate();
+			},
+			getClass: function() {
+				if (this.selected) {
+					return style.filterContainer + ' ' + style.active;
+				} else {
+					return style.filterContainer;
+				}
+			}
 		}
+
+		this.filters.forEach(function(e, i, a) {
+			Object.assign(a[i], extend);
+		})
+
+		/*
+		const setArrayImmutable = (this.filters, i, value) =>
+		  Object.assign([...this.filters], {[2]: extend});
+*/
 
 		console.log(find(this.filters, function(i) { return i.name == "Everything" }));
 
@@ -96,9 +114,6 @@ export default class Search extends Component {
 	}
 
 	handleChange(event) {
-
-
-
 		//console.log(event.target.value)
 		//this.setState({value: event.target.value});
 	}
