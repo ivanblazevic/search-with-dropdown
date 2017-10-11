@@ -1,5 +1,6 @@
 import { h, Component } from 'preact';
 import { Router } from 'preact-router';
+import jsonPretty from 'json-pretty';
 import Search from './search';
 import Header from './header';
 import Home from './home';
@@ -32,22 +33,22 @@ export default class App extends Component {
 			"Other"
 		]
 
-		//console.log(prettyFormat(this.filters));
+		this.filterResult = [];
 	}
 
 	onFilterUpdate = (filterResult) => {
-		this.filterResult = filterResult;
-		this.forceUpdate();
+		this.setState({ filterResult: filterResult });
+		console.log(jsonPretty(filterResult));
 	}
 
-	render() {
+	render = () => {
 		return (
 			<div id="app">
 				<Header>
 					<Search filters={this.filters} onUpdate={this.onFilterUpdate} />
 				</Header>
 				<Router onChange={this.handleRoute}>
-					<Home path="/" />
+					<Home path="/" filterResult={this.state.filterResult} />
 					<Profile path="/profile/" user="me" />
 					<Profile path="/profile/:user" />
 				</Router>

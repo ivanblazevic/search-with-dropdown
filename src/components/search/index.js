@@ -2,20 +2,21 @@ import { h, Component } from 'preact';
 import { Link } from 'preact-router';
 import style from './style.less';
 import { Filter } from './filter';
+import { Section } from './../section';
 import { pluck, filter, chain } from 'underscore';
 
 export default class Search extends Component {
 
 	constructor(props) {
 		super(props);
-		this.state = { query: '' };
 
+		this.state = { query: '' };
 		this.filters = [];
-		this.onUpdate = this.props.onUpdate;
 
 		this.props.filters.forEach(function(e) {
 			this.filters.push(new Filter(e, e == 'Everything'));
 		}, this);
+
 	}
 
 	updateFilter = e => {
@@ -25,21 +26,21 @@ export default class Search extends Component {
 						.pluck('name')
 						.value()
 		});
-		this.onUpdate(this.state);
+		this.props.onUpdate(this.state);
 	}
 
 	updateText = e => {
 		this.setState({ query: e.target.value });
-		this.onUpdate(this.state);
+		this.props.onUpdate(this.state);
 	}
 
-	render() {
+	render = () => {
 		return (
 			<form onSubmit={this.handleSubmit} class={style.search}>
 
 				<input placeholder="Search..." style="display: inline-block;" type="text" value={this.state.query} onInput={this.updateText} />
 
-				{ this.state.query  ?
+				{ this.state.query || true  ?
 
 					<div class={style.dropdown}>
 
@@ -58,6 +59,9 @@ export default class Search extends Component {
 								}, this)
 							}
 						</div>
+
+
+
 
 					</div>
 
