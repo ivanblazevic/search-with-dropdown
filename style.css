@@ -1,0 +1,115 @@
+html,
+body {
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  background: #FAFAFA;
+  font-family: 'Helvetica Neue', arial, sans-serif;
+  font-weight: 400;
+  color: #444;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+* {
+  box-sizing: border-box;
+}
+#app {
+  height: 100%;
+}
+._2xyY27-hSytDZNDhO4G8vI {
+  padding: 56px 20px;
+  width: 100%;
+}
+.isHcNA6xJCQIBTFzuAl0k {
+  width: 104px;
+  padding: 10px;
+  margin-left: 20px;
+}
+._3fP58XuPgCmDWOEWzAZZKf {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 56px;
+  padding: 0;
+  background: #45b862;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  z-index: 50;
+}
+.XSdubsSBDxAWmPOhp7HZv {
+  width: 50%;
+  margin: 0 auto;
+  position: absolute;
+  display: inline-block;
+  left: 25%;
+  padding-top: 10px;
+  border-radius: 2px;
+}
+.XSdubsSBDxAWmPOhp7HZv ._2ResoBcfd3TpBfs0iWyVWY {
+  position: relative;
+  color: #aaa;
+  font-size: 16px;
+}
+.XSdubsSBDxAWmPOhp7HZv ._2ResoBcfd3TpBfs0iWyVWY ._34Z67mXijwXp3vUnV54Dc_ {
+  cursor: pointer;
+  position: absolute;
+  top: 6px;
+  right: 10px;
+}
+.XSdubsSBDxAWmPOhp7HZv input {
+  width: 100%;
+  padding: 6px 14px;
+  font-size: 20px;
+  border-radius: 6px;
+  border: 0;
+}
+.XSdubsSBDxAWmPOhp7HZv input:focus {
+  outline: none;
+}
+.XSdubsSBDxAWmPOhp7HZv input._2_cgb8Z7GQXj0eQH7iPRuX {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.XSdubsSBDxAWmPOhp7HZv ._3Cn5Xtgulqo_uHUcdE_gOQ {
+  background-color: #f7f7f7;
+  padding: 10px;
+  border-left: 1px solid #e0e0e0;
+  border-right: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
+}
+.XSdubsSBDxAWmPOhp7HZv ._2ZzlWXKAvdGcUGzSAkcDW6 {
+  margin-left: 4px;
+}
+.XSdubsSBDxAWmPOhp7HZv ._33EzDgrAhdzioPa62rreC1 {
+  background: #45b862;
+}
+.XSdubsSBDxAWmPOhp7HZv ._1ry0tk0ZC9XprUxrTiriRo {
+  flex: 1;
+  flex-basis: 33.33%;
+  padding: 10px;
+}
+.XSdubsSBDxAWmPOhp7HZv ._1wACX3Hdol_xUuhHoMhrW0 {
+  flex: 1;
+  flex-basis: 50%;
+  padding: 10px;
+}
+.ihfymIj4RcH-SGR5bk1jn {
+  cursor: pointer;
+  font-size: 14px;
+  background: #ccc;
+  padding: 8px 14px;
+  border-radius: 6px;
+  color: white;
+}
+.oi8spUi3yRg4NYfIM1Q1a {
+  display: flex;
+  flex-wrap: wrap;
+}
+label {
+  font-size: 20px;
+  margin: 6px 10px;
+  display: inline-block;
+}
+
+/*# sourceMappingURL=style.css.map*/
