@@ -3,7 +3,6 @@ import style from './style.less';
 import jsonPretty from 'json-pretty';
 
 export default class Home extends Component {
-
 	render(props) {
 		return (
 			<div class={style.home}>
@@ -11,5 +10,4 @@ export default class Home extends Component {
 			</div>
 		);
 	}
-
 }

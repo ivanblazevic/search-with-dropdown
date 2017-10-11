@@ -91,6 +91,7 @@
     "json-pretty": "0.0.1",
     "preact": "^8.1.0",
     "preact-compat": "^3.15.0",
+    "preact-icons": "^2.2.5",
     "preact-render-to-string": "^3.6.0",
     "preact-router": "^2.5.1",
     "pretty-format": "^21.2.1",

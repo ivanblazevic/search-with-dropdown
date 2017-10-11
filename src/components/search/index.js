@@ -4,6 +4,8 @@ import style from './style.less';
 import { Filter } from './filter';
 import Section from './../section';
 import { pluck, filter, chain } from 'underscore';
+import FaCircleO from 'preact-icons/lib/fa/circle-o';
+import FaDotCircleO from 'preact-icons/lib/fa/dot-circle-o';
 
 export default class Search extends Component {
 
@@ -50,7 +52,10 @@ export default class Search extends Component {
 									return (
 										<div class={style.sectionContainerItem}>
 											<div onClick={player.onClick.bind(player, this)} className={player.getClass()}>
-												<i></i><span>{player.name}</span>
+												{
+													player.isSelected() ? <FaDotCircleO/> : <FaCircleO/>
+												}
+												<span style="margin-left: 2px">{player.name}</span>
 											</div>
 										</div>
 									)
