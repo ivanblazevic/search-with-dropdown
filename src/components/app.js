@@ -17,22 +17,6 @@ export default class App extends Component {
 
 	constructor() {
 		super();
-
-		this.filters = [
-			"Everything",
-			"New in your area",
-			"Fashion and Accessories",
-			"Home and Garden",
-			"Electronics",
-			"Baby and Child",
-			"Sport, Leisure and Games",
-			"Movies, Books and Music",
-			"Cars and Motors",
-			"Property",
-			"Services",
-			"Other"
-		]
-
 		this.filterResult = [];
 	}
 

@@ -1,15 +1,9 @@
 import { h, Component } from 'preact';
 import { Link } from 'preact-router';
 import style from './style.less';
-import { Filter } from './filter';
+import { Config } from './config';
 import Section from './../section';
-import { pluck, filter, chain } from 'underscore';
-import FaCircleO from 'preact-icons/lib/fa/circle-o';
-import FaDotCircleO from 'preact-icons/lib/fa/dot-circle-o';
-
-import FaChevronUp from 'preact-icons/lib/fa/chevron-up';
-import FaChevronDown from 'preact-icons/lib/fa/chevron-down';
-
+import { pluck, filter, chain, find } from 'underscore';
 
 const Selectable = props => (
 	<div class={style.sectionContainerItem} onClick={props.onClick}>
@@ -22,62 +16,73 @@ const Selectable = props => (
 	</div>
 );
 
-
 export default class Search extends Component {
 
 	constructor(props) {
 		super(props);
 
 		this.state = { query: '' };
-		this.filters = [];
 
-		this.props.filters.forEach(function(e) {
-			this.filters.push(new Filter(e, FaCircleO, FaDotCircleO));
-		}, this);
-
-		this.sortBy = [
-			new Filter('Distance', FaCircleO, FaDotCircleO),
-			new Filter('Date', FaCircleO, FaDotCircleO),
-			new Filter('Price', FaChevronUp, FaChevronUp, 'PriceUp'),
-			new Filter('Price', FaChevronDown, FaChevronDown, 'PriceDown')
-		]
-
+		var config = new Config();
+		this.filters = config.getCategories();
+		this.sortBy = config.getSortBy();
+		// set initial selection
+		this.sortBy[0].setSelected(true);
+		this.filters[0].setSelected(true);
 	}
 
-	updateSortBy = (filter) => {
-		filter.isSelected() ? filter.setSelected(false) : filter.setSelected(true);
+	update() {
 		this.setState({
 			sortBy: chain(this.sortBy)
-						.filter(function(f) { return f.selected == true })
+						.filter((f) => { return f.selected == true })
 						.pluck('value')
 						.first()
 						.value()
+						.toLowerCase()
 		});
+
+		this.setState({
+			filters: chain(this.filters)
+						.filter((f) => { return f.selected == true })
+						.pluck('value')
+						.value()
+		});
+
 		this.props.onUpdate(this.state);
+	}
+
+	updateSortBy = (filter) => {
+		var current = find(this.sortBy, (f) => { return f.isSelected() });
+		current.setSelected(false);
+		filter.setSelected(true);
+		this.update();
 	}
 
 	updateFilter = (filter, a) => {
 		if (filter.name != "Everything") {
 			this.filters[0].setSelected(false);
 		} else {
-			this.filters.forEach(function(f) {
+			this.filters.forEach((f) => {
 				f.setSelected(false);
 			})
 		}
-		filter.isSelected() ? filter.setSelected(false) : filter.setSelected(true);
-
-		this.setState({
-			filters: chain(this.filters)
-						.filter(function(f) { return f.selected == true })
-						.pluck('value')
-						.value()
-		});
-		this.props.onUpdate(this.state);
+		filter.setSelected(!filter.isSelected());
+		this.update();
 	}
 
-	updateText = e => {
+	updateQuery = e => {
 		this.setState({ query: e.target.value });
-		this.props.onUpdate(this.state);
+		this.update();
+	}
+
+	updateFrom = e => {
+		this.setState({ priceFrom: e.target.value });
+		this.update();
+	}
+
+	updateTo = e => {
+		this.setState({ priceTo: e.target.value });
+		this.update();
 	}
 
 	render = () => {
@@ -95,7 +100,7 @@ export default class Search extends Component {
 		return (
 			<form onSubmit={this.handleSubmit} class={style.search}>
 
-				<input placeholder="Search..." style="display: inline-block;" type="text" value={this.state.query} onInput={this.updateText} />
+				<input placeholder="Search..." style="display: inline-block;" type="text" value={this.state.query} onInput={this.updateQuery} />
 
 				{ this.state.query || true  ?
 
@@ -112,15 +117,11 @@ export default class Search extends Component {
 						<Section title="Price Range">
 
 							<div class={style.sectionContainerItem}>
-								<div class={style.filterContainer}>
-									<i></i><span>test 1</span>
-								</div>
+								<input placeholder="From..." style="display: inline-block;" type="number" value={this.state.priceFrom} onInput={this.updateFrom} />
 							</div>
 
 							<div class={style.sectionContainerItem}>
-								<div class={style.filterContainer}>
-									<i></i><span>test 2</span>
-								</div>
+								<input placeholder="To..." style="display: inline-block;" type="number" value={this.state.priceTo} onInput={this.updateTo} />
 							</div>
 
 						</Section>

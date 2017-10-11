@@ -1,5 +1,4 @@
 import style from './style.less';
-import { find } from 'underscore';
 
 export class Filter {
 
