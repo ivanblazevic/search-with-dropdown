@@ -1,20 +1,14 @@
 import { h, Component } from 'preact';
-import { Link } from 'preact-router';
 import style from './style.less';
-import { Filter } from './filter';
-import { pluck, filter, chain } from 'underscore';
 
 export default class Section extends Component {
-
-	constructor(props) {
-		super(props);
-
-	}
-	
-	render() {
+	render(props) {
 		return (
 			<div>
-				lak
+				<label style="font-size: 20px;margin: 6px 0;display: inline-block;">{props.title}</label>
+				<div class={style.sectionContainer}>
+					{props.children}
+				</div>
 			</div>
 		);
 	}

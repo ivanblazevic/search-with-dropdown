@@ -9,16 +9,14 @@ export default class Search extends Component {
 
 	constructor(props) {
 		super(props);
+
 		this.state = { query: '' };
-
 		this.filters = [];
-		this.onUpdate = this.props.onUpdate;
-
-		console.log(Section)
 
 		this.props.filters.forEach(function(e) {
 			this.filters.push(new Filter(e, e == 'Everything'));
 		}, this);
+
 	}
 
 	updateFilter = e => {
@@ -28,30 +26,28 @@ export default class Search extends Component {
 						.pluck('name')
 						.value()
 		});
-		this.onUpdate(this.state);
+		this.props.onUpdate(this.state);
 	}
 
 	updateText = e => {
 		this.setState({ query: e.target.value });
-		this.onUpdate(this.state);
+		this.props.onUpdate(this.state);
 	}
 
-	render() {
+	render = () => {
 		return (
 			<form onSubmit={this.handleSubmit} class={style.search}>
 
 				<input placeholder="Search..." style="display: inline-block;" type="text" value={this.state.query} onInput={this.updateText} />
 
-				{ this.state.query  ?
+				{ this.state.query || true  ?
 
 					<div class={style.dropdown}>
 
-						<label style="font-size: 20px;margin: 6px 0;display: inline-block;">Filters</label>
-
-						<div class={style.sectionContainer}>
+						<Section title="Filter">
 							{
 								this.filters.map(function(player) {
-   									return (
+									return (
 										<div class={style.sectionContainerItem}>
 											<div onClick={player.onClick.bind(player, this)} className={player.getClass()}>
 												<i></i><span>{player.name}</span>
@@ -60,7 +56,9 @@ export default class Search extends Component {
 									)
 								}, this)
 							}
-						</div>
+						</Section>
+
+						<Section title="Order By"></Section>
 
 					</div>
 

@@ -1,17 +1,13 @@
 import { h, Component } from 'preact';
 import style from './style.less';
-import Search from './../search';
-import prettyFormat from 'pretty-format';
+import jsonPretty from 'json-pretty';
 
 export default class Home extends Component {
-	
-	render() {
+
+	render(props) {
 		return (
-
 			<div class={style.home}>
-
-				<pre>{prettyFormat(this.filterResult)}</pre>
-
+				<pre>{jsonPretty(this.props.filterResult)}</pre>
 			</div>
 		);
 	}
