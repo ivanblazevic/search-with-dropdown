@@ -2,6 +2,7 @@ import { h, Component } from 'preact';
 import { Link } from 'preact-router';
 import style from './style.less';
 import { Filter } from './filter';
+import Section from './../section';
 import { pluck, filter, chain } from 'underscore';
 
 export default class Search extends Component {
@@ -12,6 +13,8 @@ export default class Search extends Component {
 
 		this.filters = [];
 		this.onUpdate = this.props.onUpdate;
+
+		console.log(Section)
 
 		this.props.filters.forEach(function(e) {
 			this.filters.push(new Filter(e, e == 'Everything'));
