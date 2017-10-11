@@ -9,6 +9,20 @@
     padding-top: 10px;
     border-radius: 2px;
 
+	.inputContainer {
+	  	position: relative;
+	  	color: #aaa;
+	  	font-size: 16px;
+
+		.inputIconContainer {
+			cursor: pointer;
+			position: absolute;
+			top: 6px;
+			right: 10px;
+		}
+
+	}
+
 	input {
 		width: 100%;
 	    padding: 6px 14px;
@@ -26,26 +40,36 @@
 
 	}
 
-}
+	.dropdown {
+		background-color: #f7f7f7;
+	    padding: 10px;
+	    border-left: 1px solid #e0e0e0;
+		border-right: 1px solid #e0e0e0;
+		border-bottom: 1px solid #e0e0e0;
+	}
 
-.dropdown {
-	background-color: #f7f7f7;
-    padding: 10px;
-    border-left: 1px solid #e0e0e0;
-	border-right: 1px solid #e0e0e0;
-	border-bottom: 1px solid #e0e0e0;
-}
+	.filterName {
+		margin-left: 4px;
+	}
 
-.sectionContainerItem {
-	flex: 1;
-	flex-basis: 33.33%;
-	padding: 10px;
-}
+	.active {
+		background: @green;
+	}
 
-.sectionContainerItemTwo {
-	flex: 1;
-	flex-basis: 50%;
-	padding: 10px;
+	.getSectionContainerItem(@width) {
+		flex: 1;
+		flex-basis: @width;
+		padding: 10px;
+	}
+
+	.sectionContainerItem {
+		.getSectionContainerItem(33.33%);
+	}
+
+	.sectionContainerItemTwoCol {
+		.getSectionContainerItem(50%);
+	}
+
 }
 
 .filterContainer {
@@ -55,12 +79,4 @@
 	padding: 8px 14px;
 	border-radius: 6px;
 	color: white;
-}
-
-.filterName {
-	margin-left: 4px;
-}
-
-.active {
-	background: @green;
 }

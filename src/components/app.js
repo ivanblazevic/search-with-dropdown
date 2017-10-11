@@ -4,7 +4,6 @@ import jsonPretty from 'json-pretty';
 import Search from './search';
 import Header from './header';
 import Home from './home';
-import Profile from './profile';
 
 export default class App extends Component {
 	/** Gets fired when the route changes.
@@ -33,8 +32,6 @@ export default class App extends Component {
 				</Header>
 				<Router onChange={this.handleRoute}>
 					<Home path="/" filterResult={this.state.filterResult} />
-					<Profile path="/profile/" user="me" />
-					<Profile path="/profile/:user" />
 				</Router>
 			</div>
 		);
