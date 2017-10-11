@@ -3,6 +3,7 @@ import FaCircleO from 'preact-icons/lib/fa/circle-o';
 import FaDotCircleO from 'preact-icons/lib/fa/dot-circle-o';
 import FaChevronUp from 'preact-icons/lib/fa/chevron-up';
 import FaChevronDown from 'preact-icons/lib/fa/chevron-down';
+import FaCheck from 'preact-icons/lib/fa/check';
 
 export class Config {
 
@@ -26,7 +27,7 @@ export class Config {
 	getCategories = () => {
 		var categories = [];
 		this.categoryList.forEach((e) => {
-			categories.push(new Filter(e, FaCircleO, FaDotCircleO));
+			categories.push(new Filter(e, FaCircleO, FaCheck));
 		});
 		return categories;
 	}
@@ -39,6 +40,5 @@ export class Config {
 			new Filter('Price', FaChevronDown, FaChevronDown, 'PriceDown')
 		]
 	}
-
 
 }

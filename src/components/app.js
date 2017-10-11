@@ -29,7 +29,7 @@ export default class App extends Component {
 		return (
 			<div id="app">
 				<Header>
-					<Search filters={this.filters} onUpdate={this.onFilterUpdate} />
+					<Search onUpdate={this.onFilterUpdate} />
 				</Header>
 				<Router onChange={this.handleRoute}>
 					<Home path="/" filterResult={this.state.filterResult} />

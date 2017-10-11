@@ -6,12 +6,12 @@ import Section from './../section';
 import { pluck, filter, chain, find } from 'underscore';
 
 const Selectable = props => (
-	<div class={style.sectionContainerItem} onClick={props.onClick}>
+	<div class={props.isTwoColumn ? style.sectionContainerItemTwo : style.sectionContainerItem } onClick={props.onClick}>
 		<div className={props.filter.getClass()}>
 			{
 				props.filter.isSelected() ? <props.filter.iconSelected/> : <props.filter.icon/>
 			}
-			<span style="margin-left: 4px">{props.filter.name}</span>
+			<span class={style.filterName}>{props.filter.name}</span>
 		</div>
 	</div>
 );
@@ -31,7 +31,13 @@ export default class Search extends Component {
 		this.filters[0].setSelected(true);
 	}
 
-	update() {
+	updateState() {
+		this.setState({
+			filters: chain(this.filters)
+						.filter((f) => { return f.selected == true })
+						.pluck('value')
+						.value()
+		});
 		this.setState({
 			sortBy: chain(this.sortBy)
 						.filter((f) => { return f.selected == true })
@@ -40,22 +46,13 @@ export default class Search extends Component {
 						.value()
 						.toLowerCase()
 		});
-
-		this.setState({
-			filters: chain(this.filters)
-						.filter((f) => { return f.selected == true })
-						.pluck('value')
-						.value()
-		});
-
-		this.props.onUpdate(this.state);
 	}
 
 	updateSortBy = (filter) => {
 		var current = find(this.sortBy, (f) => { return f.isSelected() });
 		current.setSelected(false);
 		filter.setSelected(true);
-		this.update();
+		this.updateState();
 	}
 
 	updateFilter = (filter, a) => {
@@ -67,22 +64,26 @@ export default class Search extends Component {
 			})
 		}
 		filter.setSelected(!filter.isSelected());
-		this.update();
+		this.updateState();
 	}
 
 	updateQuery = e => {
 		this.setState({ query: e.target.value });
-		this.update();
 	}
 
 	updateFrom = e => {
 		this.setState({ priceFrom: e.target.value });
-		this.update();
 	}
 
 	updateTo = e => {
 		this.setState({ priceTo: e.target.value });
-		this.update();
+	}
+
+	onSubmit = (event) => {
+		event.preventDefault();
+		this.updateState();
+		this.props.onUpdate(this.state);
+		this.setState({query: ''});
 	}
 
 	render = () => {
@@ -94,34 +95,34 @@ export default class Search extends Component {
 
 		var sortBy = []
 		this.sortBy.map(function(filter) {
-			sortBy.push(<Selectable onClick={this.updateSortBy.bind(this, filter)} filter={filter} />)
+			sortBy.push(<Selectable onClick={this.updateSortBy.bind(this, filter)} filter={filter} isTwoColumn />)
 		}, this)
 
 		return (
-			<form onSubmit={this.handleSubmit} class={style.search}>
+			<form onSubmit={this.onSubmit} class={style.search}>
 
-				<input placeholder="Search..." style="display: inline-block;" type="text" value={this.state.query} onInput={this.updateQuery} />
+				<input className={ this.state.query ? style.isActive: null } placeholder="Search..." type="text" value={this.state.query} onInput={this.updateQuery} />
 
-				{ this.state.query || true  ?
+				{ this.state.query ?
 
 					<div class={style.dropdown}>
 
-						<Section title="Filter">
+						<Section title="Categories">
 							{categories}
 						</Section>
 
-						<Section title="Filter">
+						<Section title="Sort By">
 							{sortBy}
 						</Section>
 
 						<Section title="Price Range">
 
 							<div class={style.sectionContainerItem}>
-								<input placeholder="From..." style="display: inline-block;" type="number" value={this.state.priceFrom} onInput={this.updateFrom} />
+								<input placeholder="From..." type="number" value={this.state.priceFrom} onInput={this.updateFrom} />
 							</div>
 
 							<div class={style.sectionContainerItem}>
-								<input placeholder="To..." style="display: inline-block;" type="number" value={this.state.priceTo} onInput={this.updateTo} />
+								<input placeholder="To..." type="number" value={this.state.priceTo} onInput={this.updateTo} />
 							</div>
 
 						</Section>
@@ -130,6 +131,8 @@ export default class Search extends Component {
 
 					: null
 				}
+
+				<input type="submit" hidden />
 
 			</form>
 		);
