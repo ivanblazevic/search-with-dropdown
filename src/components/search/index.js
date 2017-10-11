@@ -11,7 +11,7 @@ import FaChevronUp from 'preact-icons/lib/fa/chevron-up';
 import FaChevronDown from 'preact-icons/lib/fa/chevron-down';
 
 
-const FilterItem = props => (
+const Selectable = props => (
 	<div class={style.sectionContainerItem} onClick={props.onClick}>
 		<div className={props.filter.getClass()}>
 			{
@@ -35,36 +35,41 @@ export default class Search extends Component {
 			this.filters.push(new Filter(e, FaCircleO, FaDotCircleO));
 		}, this);
 
-		this.filters.onClick = function(filter) {
-			/*
-			if (this.name != "Everything") {
-				var everythingFilter = find(e.filters, function(i) { return i.name == "Everything" });
-				everythingFilter.setSelected(false);
-			} else {
-				// deselect all filters if EVERYTHING filter is selected
-				e.filters.forEach(function(f) {
-					f.setSelected(false);
-				})
-			}
-			*/
-			filter.isSelected() ? filter.setSelected(false) : filter.setSelected(true);
-			this.updateFilter();
-		}
-
-		this.sortBy = {
-			distance: new Filter('Distance', FaCircleO, FaDotCircleO),
-			date: new Filter('Date', FaCircleO, FaDotCircleO),
-			priceFrom: new Filter('Price', FaChevronUp, FaChevronUp, 'PriceUp'),
-			priceTo: new Filter('Price', FaChevronDown, FaChevronDown, 'PriceDown')
-		}
+		this.sortBy = [
+			new Filter('Distance', FaCircleO, FaDotCircleO),
+			new Filter('Date', FaCircleO, FaDotCircleO),
+			new Filter('Price', FaChevronUp, FaChevronUp, 'PriceUp'),
+			new Filter('Price', FaChevronDown, FaChevronDown, 'PriceDown')
+		]
 
 	}
 
-	updateFilter = e => {
+	updateSortBy = (filter) => {
+		filter.isSelected() ? filter.setSelected(false) : filter.setSelected(true);
+		this.setState({
+			sortBy: chain(this.sortBy)
+						.filter(function(f) { return f.selected == true })
+						.pluck('value')
+						.first()
+						.value()
+		});
+		this.props.onUpdate(this.state);
+	}
+
+	updateFilter = (filter, a) => {
+		if (filter.name != "Everything") {
+			this.filters[0].setSelected(false);
+		} else {
+			this.filters.forEach(function(f) {
+				f.setSelected(false);
+			})
+		}
+		filter.isSelected() ? filter.setSelected(false) : filter.setSelected(true);
+
 		this.setState({
 			filters: chain(this.filters)
 						.filter(function(f) { return f.selected == true })
-						.pluck('name')
+						.pluck('value')
 						.value()
 		});
 		this.props.onUpdate(this.state);
@@ -75,11 +80,18 @@ export default class Search extends Component {
 		this.props.onUpdate(this.state);
 	}
 
-	test = e => {
-		console.log('kaj')
-	}
-
 	render = () => {
+
+		var categories = []
+		this.filters.map(function(filter) {
+			categories.push(<Selectable onClick={this.updateFilter.bind(this, filter)} filter={filter} />)
+		}, this)
+
+		var sortBy = []
+		this.sortBy.map(function(filter) {
+			sortBy.push(<Selectable onClick={this.updateSortBy.bind(this, filter)} filter={filter} />)
+		}, this)
+
 		return (
 			<form onSubmit={this.handleSubmit} class={style.search}>
 
@@ -90,14 +102,12 @@ export default class Search extends Component {
 					<div class={style.dropdown}>
 
 						<Section title="Filter">
-							{
-								this.filters.map(function(filter) {
-									return (<FilterItem onClick={this.filters.onClick.bind(this, filter)} filter={filter} />)
-								}, this)
-							}
+							{categories}
 						</Section>
 
-
+						<Section title="Filter">
+							{sortBy}
+						</Section>
 
 						<Section title="Price Range">
 

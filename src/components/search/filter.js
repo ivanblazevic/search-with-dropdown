@@ -3,11 +3,12 @@ import { find } from 'underscore';
 
 export class Filter {
 
-	constructor(name, icon, iconSelected) {
+	constructor(name, icon, iconSelected, value) {
 		this.name = name;
 		this.icon = icon;
 		this.iconSelected = false;
-		this.selected = !!isSelected;
+		this.value = value || name;
+		this.selected = false;
 	}
 
 	isSelected = () => {
