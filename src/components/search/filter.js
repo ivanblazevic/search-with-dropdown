@@ -3,8 +3,10 @@ import { find } from 'underscore';
 
 export class Filter {
 
-	constructor(name, isSelected) {
+	constructor(name, icon, iconSelected) {
 		this.name = name;
+		this.icon = icon;
+		this.iconSelected = false;
 		this.selected = !!isSelected;
 	}
 
@@ -14,20 +16,6 @@ export class Filter {
 
 	setSelected = (isSelected) => {
 		this.selected = isSelected;
-	}
-
-	onClick = (e) => {
-		if (this.name != "Everything") {
-			var everythingFilter = find(e.filters, function(i) { return i.name == "Everything" });
-			everythingFilter.setSelected(false);
-		} else {
-			// deselect all filters if EVERYTHING filter is selected
-			e.filters.forEach(function(f) {
-				f.setSelected(false);
-			})
-		}
-		this.isSelected() ? this.setSelected(false) : this.setSelected(true);
-		e.updateFilter();
 	}
 
 	getClass = () => {

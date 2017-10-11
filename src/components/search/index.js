@@ -7,6 +7,22 @@ import { pluck, filter, chain } from 'underscore';
 import FaCircleO from 'preact-icons/lib/fa/circle-o';
 import FaDotCircleO from 'preact-icons/lib/fa/dot-circle-o';
 
+import FaChevronUp from 'preact-icons/lib/fa/chevron-up';
+import FaChevronDown from 'preact-icons/lib/fa/chevron-down';
+
+
+const FilterItem = props => (
+	<div class={style.sectionContainerItem} onClick={props.onClick}>
+		<div className={props.filter.getClass()}>
+			{
+				props.filter.isSelected() ? <props.filter.iconSelected/> : <props.filter.icon/>
+			}
+			<span style="margin-left: 4px">{props.filter.name}</span>
+		</div>
+	</div>
+);
+
+
 export default class Search extends Component {
 
 	constructor(props) {
@@ -16,8 +32,31 @@ export default class Search extends Component {
 		this.filters = [];
 
 		this.props.filters.forEach(function(e) {
-			this.filters.push(new Filter(e, e == 'Everything'));
+			this.filters.push(new Filter(e, FaCircleO, FaDotCircleO));
 		}, this);
+
+		this.filters.onClick = function(filter) {
+			/*
+			if (this.name != "Everything") {
+				var everythingFilter = find(e.filters, function(i) { return i.name == "Everything" });
+				everythingFilter.setSelected(false);
+			} else {
+				// deselect all filters if EVERYTHING filter is selected
+				e.filters.forEach(function(f) {
+					f.setSelected(false);
+				})
+			}
+			*/
+			filter.isSelected() ? filter.setSelected(false) : filter.setSelected(true);
+			this.updateFilter();
+		}
+
+		this.sortBy = {
+			distance: new Filter('Distance', FaCircleO, FaDotCircleO),
+			date: new Filter('Date', FaCircleO, FaDotCircleO),
+			priceFrom: new Filter('Price', FaChevronUp, FaChevronUp, 'PriceUp'),
+			priceTo: new Filter('Price', FaChevronDown, FaChevronDown, 'PriceDown')
+		}
 
 	}
 
@@ -36,6 +75,10 @@ export default class Search extends Component {
 		this.props.onUpdate(this.state);
 	}
 
+	test = e => {
+		console.log('kaj')
+	}
+
 	render = () => {
 		return (
 			<form onSubmit={this.handleSubmit} class={style.search}>
@@ -48,48 +91,13 @@ export default class Search extends Component {
 
 						<Section title="Filter">
 							{
-								this.filters.map(function(player) {
-									return (
-										<div class={style.sectionContainerItem}>
-											<div onClick={player.onClick.bind(player, this)} className={player.getClass()}>
-												{
-													player.isSelected() ? <FaDotCircleO/> : <FaCircleO/>
-												}
-												<span style="margin-left: 2px">{player.name}</span>
-											</div>
-										</div>
-									)
+								this.filters.map(function(filter) {
+									return (<FilterItem onClick={this.filters.onClick.bind(this, filter)} filter={filter} />)
 								}, this)
 							}
 						</Section>
 
-						<Section title="Sort By">
 
-							<div class={style.sectionContainerItemTwo}>
-								<div class={style.filterContainer}>
-									<i></i><span>Distance</span>
-								</div>
-							</div>
-
-							<div class={style.sectionContainerItemTwo}>
-								<div class={style.filterContainer}>
-									<i></i><span>Date</span>
-								</div>
-							</div>
-
-							<div class={style.sectionContainerItemTwo}>
-								<div class={style.filterContainer}>
-									<i></i><span>Price</span>
-								</div>
-							</div>
-
-							<div class={style.sectionContainerItemTwo}>
-								<div class={style.filterContainer}>
-									<i></i><span>Price</span>
-								</div>
-							</div>
-
-						</Section>
 
 						<Section title="Price Range">
 
