@@ -58,7 +58,49 @@ export default class Search extends Component {
 							}
 						</Section>
 
-						<Section title="Order By"></Section>
+						<Section title="Sort By">
+
+							<div class={style.sectionContainerItemTwo}>
+								<div class={style.filterContainer}>
+									<i></i><span>Distance</span>
+								</div>
+							</div>
+
+							<div class={style.sectionContainerItemTwo}>
+								<div class={style.filterContainer}>
+									<i></i><span>Date</span>
+								</div>
+							</div>
+
+							<div class={style.sectionContainerItemTwo}>
+								<div class={style.filterContainer}>
+									<i></i><span>Price</span>
+								</div>
+							</div>
+
+							<div class={style.sectionContainerItemTwo}>
+								<div class={style.filterContainer}>
+									<i></i><span>Price</span>
+								</div>
+							</div>
+
+						</Section>
+
+						<Section title="Price Range">
+
+							<div class={style.sectionContainerItem}>
+								<div class={style.filterContainer}>
+									<i></i><span>test 1</span>
+								</div>
+							</div>
+
+							<div class={style.sectionContainerItem}>
+								<div class={style.filterContainer}>
+									<i></i><span>test 2</span>
+								</div>
+							</div>
+
+						</Section>
 
 					</div>
 
