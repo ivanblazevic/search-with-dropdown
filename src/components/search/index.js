@@ -37,9 +37,9 @@ export default class Search extends Component {
 		return (
 			<form onSubmit={this.handleSubmit} class={style.search}>
 
-				<input type="text" value={this.state.query} onInput={this.updateText} />
+				<input placeholder="Search..." style="display: inline-block;" type="text" value={this.state.query} onInput={this.updateText} />
 
-				{ this.state.value || !this.state.value  ?
+				{ this.state.query  ?
 
 					<div class={style.dropdown}>
 
