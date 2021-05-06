@@ -98,6 +98,6 @@
     "promise-polyfill": "^6.0.2",
     "proptypes": "^1.0.0",
     "serve": "^6.0.0",
-    "underscore": "^1.8.3"
+    "underscore": "^1.12.1"
   }
 }
